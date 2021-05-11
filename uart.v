@@ -112,7 +112,7 @@ assign rx_data  = rx_shift_val[N_DATA:1];
 assign rx_valid = rx_done & rx_no_error;
 
 assign rx_shift_nxt = {rx_raw, rx_shift_val[N-1:1]};
-assign rx_shift_rst = rst | rx_fire | (rx_done & ~rx_no_error) | (rx_valid & rx_bit_samp); // get 1 bit width to receive word
+assign rx_shift_rst = rst | rx_fire | (rx_done & ~rx_no_error) | (rx_valid & (rx_edge | rx_bit_edge)); // ~0.5 bit width to receive word
 assign rx_shift_ce  = ~rx_edge & rx_bit_samp;
 
 assign rx_counter_nxt = rx_edge ? 1 : rx_counter_val + 1; // reset to 1 if see edge (only matters at high baud rate)
